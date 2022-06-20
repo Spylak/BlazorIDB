@@ -8,6 +8,7 @@
 		<Authors>Spylak</Authors>
 		<Description>This is a simple wrapper of the idb-keyval.js library for Blazor applications.
 It is designed to be used similar to Entity Framework Database.</Description>
+		<RepositoryUrl>https://github.com/Spylak/BlazorIDB</RepositoryUrl>
 	</PropertyGroup>
 
 
