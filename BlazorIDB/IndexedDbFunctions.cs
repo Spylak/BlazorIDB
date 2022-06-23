@@ -23,7 +23,7 @@ namespace BlazorIDB
             {
                 entities = new List<T>();
             }
-            entity.GetType().GetProperty("Id").SetValue(entity, Guid.NewGuid());
+            entity?.GetType().GetProperty("Id")?.SetValue(entity, Guid.NewGuid());
             entities.Add(entity);
             var result = indexedDb.InvokeVoidAsync("postItem", _tableName, entities);
             return result.IsCompletedSuccessfully;
@@ -40,7 +40,7 @@ namespace BlazorIDB
 
             for (int i = 0; i < entitiesIn.Count; i++)
             {
-                entitiesIn[0].GetType().GetProperty("Id").SetValue(entitiesIn[i], Guid.NewGuid());
+                entitiesIn[0]?.GetType().GetProperty("Id")?.SetValue(entitiesIn[i], Guid.NewGuid());
             }
             entities.AddRange(entitiesIn);
             var result = indexedDb.InvokeVoidAsync("postItem", _tableName, entities);
@@ -57,7 +57,7 @@ namespace BlazorIDB
                 entities = new List<T>();
             }
 
-            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id") == entity.GetType().GetProperty("Id"));
+            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == entity.GetType().GetProperty("Id")?.GetValue(entity));
             entities.Remove(item);
             entities.Add(entity);
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
@@ -78,7 +78,7 @@ namespace BlazorIDB
 
             foreach (var itm in entitiesIn)
             {
-                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id") == itm.GetType().GetProperty("Id"));
+                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == itm.GetType().GetProperty("Id")?.GetValue(itm));
                 entities.Remove(item);
                 entities.Add(itm);
             }
@@ -109,7 +109,7 @@ namespace BlazorIDB
             {
                 entities = new List<T>();
             }
-            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id") == entity.GetType().GetProperty("Id"));
+            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == entity.GetType().GetProperty("Id")?.GetValue(entity));
             entities.Remove(item);
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
             return result.IsCompletedSuccessfully;
@@ -129,7 +129,7 @@ namespace BlazorIDB
 
             foreach (var itm in entitiesIn)
             {
-                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id") == itm.GetType().GetProperty("Id"));
+                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == itm.GetType().GetProperty("Id")?.GetValue(itm));
                 entities.Remove(item);
             }
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
