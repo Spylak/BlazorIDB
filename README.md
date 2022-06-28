@@ -5,10 +5,10 @@ This is a simple wrapper of the idb-keyval.js library for Blazor applications. I
 ### Create an entity Class
 
 ```c#
-
+//A property called Id with the type of string is needed
 public class MyEntity
 {
-    public Guid Id {get; set;}
+    public string Id {get; set;}
     public string Property {get; set;}
     public int Property2 {get; set;}
     public List<int> Property3 {get; set;}
@@ -52,8 +52,12 @@ builder.Services.AddScoped<IndexedDb>();
 
 ```c#
 //Get all
-await _indexedDb.Entity.GetAll();
+var allEntities = await _indexedDb.Entity.GetAll();
 
+//GetById, the id used is a string
+var getEntity = await _indexedDb.Entity.GetById(id);
+
+//When adding either single entity or many they generate a new Guid that is then saved as string.
 //Add
 var entity=new MyEntity()
 {
