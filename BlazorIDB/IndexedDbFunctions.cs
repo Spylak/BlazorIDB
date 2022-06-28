@@ -16,15 +16,20 @@ namespace BlazorIDB
 
         public async Task<bool> Add(T entity)
         {
+            if (entity is null)
+                return false;
+
             var indexedDb = await _jsRuntime.InvokeAsync<IJSObjectReference>(
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
+
             if (entities is null)
             {
                 entities = new List<T>();
             }
-            entity?.GetType().GetProperty("Id")?.SetValue(entity, Guid.NewGuid());
-            entities.Add(entity);
+
+            entity?.GetType().GetProperty("Id")?.SetValue(entity, Guid.NewGuid().ToString());
+            entities.Add(entity!);
             var result = indexedDb.InvokeVoidAsync("postItem", _tableName, entities);
             return result.IsCompletedSuccessfully;
         }
@@ -33,6 +38,7 @@ namespace BlazorIDB
             var indexedDb = await _jsRuntime.InvokeAsync<IJSObjectReference>(
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
+
             if (entities is null)
             {
                 entities = new List<T>();
@@ -40,7 +46,7 @@ namespace BlazorIDB
 
             for (int i = 0; i < entitiesIn.Count; i++)
             {
-                entitiesIn[0]?.GetType().GetProperty("Id")?.SetValue(entitiesIn[i], Guid.NewGuid());
+                entitiesIn[0]?.GetType().GetProperty("Id")?.SetValue(entitiesIn[i], Guid.NewGuid().ToString());
             }
             entities.AddRange(entitiesIn);
             var result = indexedDb.InvokeVoidAsync("postItem", _tableName, entities);
@@ -53,11 +59,11 @@ namespace BlazorIDB
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
-            {
-                entities = new List<T>();
-            }
+                return false;
 
             var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == entity.GetType().GetProperty("Id")?.GetValue(entity));
+            if (item is null)
+                return false;
             entities.Remove(item);
             entities.Add(entity);
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
@@ -72,15 +78,16 @@ namespace BlazorIDB
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
-            {
-                entities = new List<T>();
-            }
+                return false;
 
             foreach (var itm in entitiesIn)
             {
                 var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == itm.GetType().GetProperty("Id")?.GetValue(itm));
-                entities.Remove(item);
-                entities.Add(itm);
+                if (item is not null)
+                {
+                    entities.Remove(item);
+                    entities.Add(itm);
+                }
             }
 
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
@@ -99,6 +106,16 @@ namespace BlazorIDB
 
             return result;
         }
+        public async Task<T?> GetById(string id)
+        {
+            var indexedDb = await _jsRuntime.InvokeAsync<IJSObjectReference>(
+               "import", ImportPath);
+            var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
+            if (entities is null)
+                return null;
+            var item = entities?.FirstOrDefault(i => (string)i.GetType().GetProperty("Id")!.GetValue(i)! == id);
+            return item;
+        }
 
         public async Task<bool> Remove(T entity)
         {
@@ -106,10 +123,10 @@ namespace BlazorIDB
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
-            {
-                entities = new List<T>();
-            }
+                return false;
             var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == entity.GetType().GetProperty("Id")?.GetValue(entity));
+            if (item is null)
+                return false;
             entities.Remove(item);
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
             return result.IsCompletedSuccessfully;
@@ -123,14 +140,15 @@ namespace BlazorIDB
                 "import", ImportPath);
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
-            {
-                entities = new List<T>();
-            }
+                return false;
 
             foreach (var itm in entitiesIn)
             {
                 var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")?.GetValue(i) == itm.GetType().GetProperty("Id")?.GetValue(itm));
-                entities.Remove(item);
+                if (item is not null)
+                {
+                    entities.Remove(item);
+                }
             }
             var result = indexedDb.InvokeVoidAsync("putItem", _tableName, entities);
             return result.IsCompletedSuccessfully;
