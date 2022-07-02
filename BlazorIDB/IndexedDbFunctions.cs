@@ -66,7 +66,7 @@ namespace BlazorIDB
             if (entities is null)
                 return false;
 
-            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i) == entity.GetType().GetProperty("Id")!.GetValue(entity));
+            var item = entities.FirstOrDefault(i => object.Equals( i.GetType().GetProperty("Id")!.GetValue(i) , entity.GetType().GetProperty("Id")!.GetValue(entity)));
             if (item is null)
                 return false;
             entities.Remove(item);
@@ -87,7 +87,7 @@ namespace BlazorIDB
 
             foreach (var itm in entitiesIn)
             {
-                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i) == itm.GetType().GetProperty("Id")!.GetValue(itm));
+                var item = entities.FirstOrDefault(i => object.Equals(i.GetType().GetProperty("Id")!.GetValue(i), itm.GetType().GetProperty("Id")!.GetValue(itm)));
                 if (item is not null)
                 {
                     entities.Remove(item);
@@ -118,7 +118,7 @@ namespace BlazorIDB
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
                 return null;
-            var item = entities?.FirstOrDefault(i => (string)i.GetType().GetProperty("Id")!.GetValue(i)! == id);
+            var item = entities?.FirstOrDefault(i => object.Equals(i.GetType().GetProperty("Id")!.GetValue(i), id));
             return item;
         }
 
@@ -129,7 +129,7 @@ namespace BlazorIDB
             var entities = await indexedDb.InvokeAsync<List<T>>("getItem", _tableName);
             if (entities is null)
                 return false;
-            var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i) == entity.GetType().GetProperty("Id")!.GetValue(entity));
+            var item = entities.FirstOrDefault(i => object.Equals(i.GetType().GetProperty("Id")!.GetValue(i), entity.GetType().GetProperty("Id")!.GetValue(entity)));
             if (item is null)
                 return false;
             entities.Remove(item);
@@ -149,7 +149,7 @@ namespace BlazorIDB
 
             foreach (var itm in entitiesIn)
             {
-                var item = entities.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i) == itm.GetType().GetProperty("Id")!.GetValue(itm));
+                var item = entities.FirstOrDefault(i => object.Equals(i.GetType().GetProperty("Id")!.GetValue(i), itm.GetType().GetProperty("Id")!.GetValue(itm)));
                 if (item is not null)
                 {
                     entities.Remove(item);
