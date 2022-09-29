@@ -12,3 +12,11 @@
 /.vs/BlazorIDB/FileContentIndex/328ade17-8f78-43da-b3e3-101f6eb074e9.vsidx
 /.vs/BlazorIDB/FileContentIndex/2d27fb2f-4e2f-4402-ab9b-4d61f8634589.vsidx
 /.vs/BlazorIDB/FileContentIndex/25630368-b146-41a8-b09e-7ee17b87fd9f.vsidx
+/BlazorTest/bin/*
+/BlazorTest/obj
+/BlazorIDB/bin/Release/net6.0
+/BlazorIDB/obj/Release/net6.0
+/BlazorIDB/obj/Debug/net6.0
+/BlazorIDB/obj
+/.vs/BlazorIDB/FileContentIndex
+/.vs/BlazorIDB/config
