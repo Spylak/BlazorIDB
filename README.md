@@ -25,6 +25,8 @@ public class MyEntity
 ### Create Database Class
 
 ```c#
+using BlazorIDB;
+
 public class IndexedDb
 {
     public IndexedDbTable<MyEntity> Entity;
