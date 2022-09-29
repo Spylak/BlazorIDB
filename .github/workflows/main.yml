@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.0
@@ -22,7 +22,7 @@ jobs:
        
        # Changes the base tag in index.html from ‘/’ to ‘BlazorGitHubPagesDemo’ to match the GitHub Pages repository subdirectory
       - name: Change base-tag in index.html from / to BlazorIDB
-        run: sed -i ‘s/<base href=”\/” \/>/<base href=”\/BlazorIDB\/” \/>/g’ release/wwwroot/index.html
+        run: sed -i ‘s/<base href=”\/” \/>/<base href=”\/BlazorIDB\/” \/>/g’ */index.html
        
        # Copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
