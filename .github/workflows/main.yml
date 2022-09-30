@@ -19,17 +19,7 @@ jobs:
        # Publishes the Blazor project to the release folder
       - name: Publish .NET Core Project
         run: dotnet publish BlazorTest -c Release -o release
-       
-      - name: check folder
-        run: cd release
-      
-      - name: check folder
-        run: ls -a
-       
-       # Changes the base tag in index.html from ‘/’ to ‘BlazorGitHubPagesDemo’ to match the GitHub Pages repository subdirectory
-      - name: Change base-tag in index.html from / to BlazorIDB
-        run: find ./ -type f -exec sed -i -e ‘s/<base href=”\/” \/>/<base href=”\/BlazorIDB\/” \/>/g’ {} \
-       
+        
        # Copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
         run: cp release/wwwroot/index.html release/wwwroot/404.html
