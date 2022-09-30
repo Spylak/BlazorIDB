@@ -25,7 +25,7 @@
       <InputFile>..\release\wwwroot\index.html</InputFile>
       <OutputFile>..\release\wwwroot\index.html</OutputFile>
     </PropertyGroup>
-    <WriteLinesToFile File="$(OutputFile)" Lines="$([System.IO.File]::ReadAllText($(InputFile)).Replace('base href=%22/','base href=%22/BlazorIDB'))" Overwrite="true" Encoding="Unicode" />
+    <WriteLinesToFile File="$(OutputFile)" Lines="$([System.IO.File]::ReadAllText($(InputFile)).Replace('base href=%22/','base href=%22/BlazorIDB/'))" Overwrite="true" Encoding="Unicode" />
   </Target>
   
 </Project>
