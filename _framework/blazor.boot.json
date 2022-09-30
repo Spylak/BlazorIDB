@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "BlazorIDB.dll": "sha256-d8O0OLFumKmsh1vGv49szpFhyu+ezEoVk9ufCUGClOw=",
-      "BlazorTest.dll": "sha256-2QkWBCDIfSnnkdtp5McMeZMkkZMUC5YZQcWexnHmZo0=",
+      "BlazorTest.dll": "sha256-MVz7GSt5ue0AhGSrJ+KsCQ6Q8n5us9ZbiYfnnGgN+J8=",
       "Microsoft.AspNetCore.Components.dll": "sha256-8Sss6asrTn3zYhevkEydAyA23oh0TLWAJ0WIE5Bu2Pc=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-kBvLuYcDFmfb1Bx\/LDpF3oVaXUJSkUu\/\/tVTYytXWtE=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-WH64Y2xJU+JXn7gbGJ0jUrgZog7DoFdct3EnFJ14hLg=",
@@ -24,7 +24,7 @@
       "Microsoft.Extensions.Primitives.dll": "sha256-YColTWA58whC+8aBjv1O7HgsyYrbHTba601EkNDWAlo=",
       "Microsoft.JSInterop.dll": "sha256-b69Rij25ABcpyxTfcfjD03pIcdznIcZtktUxW\/\/Cr90=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-JnYE3PacT+0TrHdA2lIvLkQwSgtLQlRYc+tzxGVgpOM=",
-      "MudBlazor.dll": "sha256-v8DNy8\/MqsKuX0frAk3K+Yo1MkZ63TvQEmxEXrd1UNA=",
+      "MudBlazor.dll": "sha256-aAa2Popq6Ce8Ik+o3Gtseu37SHreoXauGxXFwaETqmQ=",
       "System.Collections.Concurrent.dll": "sha256-33EvUYLwROdnO0uH3oXs7FYN9sDNwutBgfZ1mroj6\/8=",
       "System.Collections.dll": "sha256-WIPZ7AO+6Uhp6AHgug97OdwQ7updiLTp1Z6YCjjxtsA=",
       "System.ComponentModel.Annotations.dll": "sha256-F\/14XT9dlkLhYLa3PoK4D0FrcDkYmJM\/ZcbpKh2j1qE=",
