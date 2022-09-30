@@ -1,70 +1,78 @@
-﻿@page "/dbfunctions"
+﻿@page "/"
 
 @using BlazorTest.Entities
 @using System.Text.Json
-    <MudGrid>
-        <MudItem xs="6" sm="2">
-            <MudButton Color="Color.Success" OnClick="async () => await Add()">Add</MudButton>
-        </MudItem>
-        <MudItem xs="6" sm="2">
-            <MudButton Color="Color.Tertiary" OnClick="async () => await AddRange()">Add Many</MudButton>
-        </MudItem>
-        <MudItem xs="6" sm="2">
-            <MudButton Color="Color.Secondary" OnClick="async () => await LoadData()">Get All items</MudButton>
-        </MudItem>
-        <MudItem xs="6" sm="2">
-            <MudTextField T="string" Value="EntityId" ValueChanged="(str) => EntityId = str" Variant="Variant.Outlined" />
-        </MudItem>
-        <MudItem xs="6" sm="2">
-            <MudButton Color="Color.Info" OnClick="async () => await GetById(EntityId)">Get Specific Item</MudButton>
-        </MudItem>
-        <MudItem xs="6" sm="2">
-            <MudButton Color="Color.Error" OnClick="async () => await RemoveId(EntityId)">Remove Specific Item</MudButton>
-        </MudItem>
-                <MudItem xs="12">
+<MudGrid>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Success" OnClick="async () => await Add()">Add</MudButton>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Tertiary" OnClick="async () => await AddRange()">Add Many</MudButton>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Secondary" OnClick="async () => await LoadData()">Get All items</MudButton>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudTextField T="string" Value="EntityId" ValueChanged="(str) => EntityId = str" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Info" OnClick="async () => await GetById(EntityId)">Get Specific Item</MudButton>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Error" OnClick="async () => await RemoveId(EntityId)">Remove Specific Item</MudButton>
+    </MudItem>
+    <MudItem xs="12">
 
-<MudDataGrid T="MyEntity" Items="@MyEntities" EditMode="DataGridEditMode.Cell"
-             Bordered="true" Dense="true"
-             ReadOnly="false"
-             MultiSelection="true"
-             SelectedItems="@SelectedItems"
-             CommittedItemChanges="@CommittedItemChanges"
-             EditTrigger="DataGridEditTrigger.OnRowClick">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">My Entities</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick=" async () => await RemoveRange(SelectedItems)"></MudIconButton>
-    </ToolBarContent>
-    <Columns>
-        <SelectColumn T="MyEntity" />
-        <Column T="MyEntity">
-            <CellTemplate>
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" 
-                               Color="Color.Error" 
-                               OnClick=" async () => await RemoveId(context.Item.Id)"/>
-            </CellTemplate>
-        </Column>
-        <Column T="MyEntity" Field="Id" IsEditable="false" />
-        <Column T="MyEntity" Field="StringProp" />
-        <Column T="MyEntity" Field="IntProp" />
-        <Column T="MyEntity" Field="IntList" IsEditable="false">
-            <CellTemplate>
-                @(JsonSerializer.Serialize(context.Item.IntList))
-            </CellTemplate>
-        </Column>
-        <Column T="MyEntity" Field="InnerProperty" IsEditable="false">
-            <CellTemplate>
-                @(JsonSerializer.Serialize(context.Item.InnerProperty))
-            </CellTemplate>
-        </Column>
-    </Columns>
-    <PagerContent>
-            <MudDataGridPager T="MyEntity" />
-        </PagerContent>
-</MudDataGrid>
-        </MudItem>
+        <MudDataGrid T="MyEntity" Items="@MyEntities" EditMode="DataGridEditMode.Cell"
+                     Bordered="true" Dense="true"
+                     ReadOnly="false"
+                     Hover="true"
+                     Striped="true"
+                     MultiSelection="true"
+                     SelectedItems="@SelectedItems"
+                     CommittedItemChanges="@CommittedItemChanges"
+                     EditTrigger="DataGridEditTrigger.OnRowClick">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">My Entities</MudText>
+                <MudSpacer/>
+                <MudButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="async () => await RemoveRange(SelectedItems)">
+                    Delete Selected
+                </MudButton>
+            </ToolBarContent>
+            <Columns>
+                <Column T="MyEntity" IsEditable="false">
+                    <CellTemplate>
+                            <MudCheckBox T="bool" Checked="@context.IsSelected" CheckedChanged="@context.Actions.SetSelectedItem" />
+                        </CellTemplate>
+                </Column>
+                <Column T="MyEntity" Sortable="false" IsEditable="false">
+                    <CellTemplate>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                       Color="Color.Error"
+                                       OnClick="async () => await RemoveId(context.Item.Id)"/>
+                    </CellTemplate>
+                </Column>
+                <Column T="MyEntity" Field="Id" IsEditable="false"/>
+                <Column T="MyEntity" Field="StringProp"/>
+                <Column T="MyEntity" Field="IntProp"/>
+                <Column T="MyEntity" Field="IntList" IsEditable="false">
+                    <CellTemplate>
+                        @(JsonSerializer.Serialize(context.Item.IntList))
+                    </CellTemplate>
+                </Column>
+                <Column T="MyEntity" Field="InnerProperty" IsEditable="false">
+                    <CellTemplate>
+                        @(JsonSerializer.Serialize(context.Item.InnerProperty))
+                    </CellTemplate>
+                </Column>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="MyEntity"/>
+            </PagerContent>
+        </MudDataGrid>
+    </MudItem>
 
-    </MudGrid>
+</MudGrid>
 
 @code
 {
