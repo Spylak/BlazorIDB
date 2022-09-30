@@ -21,6 +21,9 @@ jobs:
         run: dotnet publish BlazorTest -c Release -o release
        
       - name: check folder
+        run: cd release
+      
+      - name: check folder
         run: ls -a
        
        # Changes the base tag in index.html from ‘/’ to ‘BlazorGitHubPagesDemo’ to match the GitHub Pages repository subdirectory
