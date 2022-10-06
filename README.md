@@ -41,7 +41,7 @@ public class IndexedDb
 ### Add Database Class to Services in Program.cs
 
 ```c#
-builder.Services.AddScoped<IndexedDb>();
+builder.Services.AddSingleton<IndexedDb>();
 ```
 
 ### Inject the database class to any Blazor page you want to use it
