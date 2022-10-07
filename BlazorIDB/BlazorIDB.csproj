@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>2.1.1</Version>
+		<Version>2.2.1</Version>
 		<Authors>Spylak</Authors>
 		<Description>This is a simple wrapper of the idb-keyval.js library for Blazor applications.
 It is designed to be used similar to Entity Framework Database.</Description>

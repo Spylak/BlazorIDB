@@ -1,6 +1,7 @@
 ﻿using BlazorIDB;
 using BlazorTest.Database;
 using BlazorTest.Entities;
+using BlazorTest.Services;
 using BlazorTest.Services.IServices;
 using Microsoft.AspNetCore.Components;
 using System.Text.Json;
@@ -32,7 +33,7 @@ namespace BlazorTest.Pages
 
         private async Task Add()
         {
-            await _indexedDb.Entities.Add(new MyEntity()
+            var myEnt = new MyEntity()
             {
                 Id = Guid.NewGuid().ToString(),
                 StringProp = $"New Prop {Random.Next(0, 1000)}",
@@ -55,7 +56,9 @@ namespace BlazorTest.Pages
                         $"Random string nubmer {Random.Next(0, 1000)}"
                     }
                 }
-            });
+            };
+
+            await _indexedDb.Entities.Add(myEnt);
             await LoadData();
             StateHasChanged();
         }
@@ -161,7 +164,6 @@ namespace BlazorTest.Pages
         {
             GetOneEntity = MyEntities.FirstOrDefault(i => i.Id.Equals(id)) ?? new MyEntity();
             var result = await Remove(GetOneEntity);
-            await globalService.ConsoleLog(result);
             if (result.IsSuccess)
             {
                 EntityId = "";

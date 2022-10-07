@@ -31,7 +31,10 @@ namespace BlazorIDB
                 var entities = await indexedDb
                     .InvokeAsync<List<T>>("getItem", _tableName) ?? new List<T>();
 
-                entity.GetType().GetProperty("Id")?.SetValue(entity, Guid.NewGuid().ToString());
+                var id = entity.GetType().GetProperty("Id")?.GetValue(entity);
+
+                if(string.IsNullOrWhiteSpace((string?)id))
+                    entity.GetType().GetProperty("Id")?.SetValue(entity, Guid.NewGuid().ToString());
 
                 entities.Add(entity!);
 
@@ -66,8 +69,10 @@ namespace BlazorIDB
 
                 foreach (var item in entitiesIn)
                 {
-                    entitiesIn.First().GetType().GetProperty("Id")?
-                        .SetValue(item, Guid.NewGuid().ToString());
+                    var id = item.GetType().GetProperty("Id")?.GetValue(item);
+
+                    if (string.IsNullOrWhiteSpace((string?)id))
+                        item.GetType().GetProperty("Id")?.SetValue(item, Guid.NewGuid().ToString());
                 }
 
                 entities.AddRange(entitiesIn);
@@ -103,8 +108,10 @@ namespace BlazorIDB
 
                 foreach (var item in entitiesIn)
                 {
-                    entitiesIn.First().GetType().GetProperty("Id")?
-                        .SetValue(item, Guid.NewGuid().ToString());
+                    var id = item.GetType().GetProperty("Id")?.GetValue(item);
+
+                    if (string.IsNullOrWhiteSpace((string?)id))
+                        item.GetType().GetProperty("Id")?.SetValue(item, Guid.NewGuid().ToString());
                 }
 
                 entities.AddRange(entitiesIn);
