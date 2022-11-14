@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Version>2.2.1</Version>
@@ -11,8 +11,15 @@ It is designed to be used similar to Entity Framework Database.</Description>
 		<RepositoryUrl>https://github.com/Spylak/BlazorIDB</RepositoryUrl>
 	</PropertyGroup>
 
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+		<PackageReference Include="Microsoft.JSInterop" Version="6.0.11" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
+		<PackageReference Include="Microsoft.JSInterop" Version="7.0.0" />
+
+	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.JSInterop" Version="6.0.6" />
 	</ItemGroup>
 </Project>
