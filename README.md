@@ -1,7 +1,7 @@
 # BlazorIDB
 
 This is a simple wrapper of the idb-keyval.js library for Blazor applications. It is designed to be used similar to Entity Framework Database.
-
+You can have a look at it [here](https://spylak.github.io/BlazorIDB/).
 ### Create an entity Class
 
 ```c#
