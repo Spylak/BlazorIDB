@@ -5,11 +5,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace BlazorTest.Database
 {
-    public class IndexedDb
+    public class IndexedDb : BlazorIndexedDb
     {
         public readonly IndexedDbTable<MyEntity> Entities;
 
-        public IndexedDb(IJSRuntime jsRuntime)
+        public IndexedDb(IJSRuntime jsRuntime) : base(jsRuntime)
         {
             Entities = new IndexedDbTable<MyEntity>(jsRuntime, "myentity");
         }

@@ -18,6 +18,7 @@ namespace BlazorTest.Pages
         private List<MyEntity> MyEntities = new List<MyEntity>();
         private HashSet<MyEntity> SelectedItems = new HashSet<MyEntity>();
         private MyEntity GetOneEntity { get; set; }
+        private List<string> Keys { get; set; } = new List<string>();
         protected override async Task OnInitializedAsync()
         {
             if (_indexedDb == null)
@@ -177,6 +178,25 @@ namespace BlazorTest.Pages
             await LoadData();
             StateHasChanged();
         }
+
+        private async Task ClearStore()
+        {
+            var result = await _indexedDb.ClearStore();
+            await LoadData();
+            StateHasChanged();
+        }
+        
+        private async Task GetKeys()
+        {
+            var result = await _indexedDb.GetKeys();
+            if (result.IsSuccess)
+            {
+                Keys = result.Data ?? new List<string>();
+            }
+            await LoadData();
+            StateHasChanged();
+        }
+        
         private async Task UpdateRange(List<MyEntity> myEntities)
         {
             var result = await _indexedDb.Entities.UpdateRange(myEntities);

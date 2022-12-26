@@ -281,3 +281,9 @@ export function removeItem(key) {
 export function getItem(key) {
     return idbKeyVal.get(key);
 }
+export function clearStore() {
+    return idbKeyVal.clear();
+}
+export function getKeys() {
+    return idbKeyVal.keys();
+}

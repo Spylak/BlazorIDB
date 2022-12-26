@@ -4,7 +4,7 @@
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>2.3.1</Version>
+		<Version>2.4.0</Version>
 		<Authors>Spylak</Authors>
 		<Description>This is a simple wrapper of the idb-keyval.js library for Blazor applications.
 It is designed to be used similar to Entity Framework Database.</Description>
@@ -19,7 +19,10 @@ It is designed to be used similar to Entity Framework Database.</Description>
 		<PackageReference Include="Microsoft.JSInterop" Version="7.0.0" />
 
 	</ItemGroup>
-
+	
 	<ItemGroup>
+	  <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+	    <HintPath>..\..\..\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\6.0.0\lib\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>

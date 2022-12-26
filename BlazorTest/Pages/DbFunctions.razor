@@ -21,6 +21,18 @@
     <MudItem xs="6" sm="2">
         <MudButton Color="Color.Error" OnClick="async () => await RemoveId(EntityId)">Remove Specific Item</MudButton>
     </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Tertiary" OnClick="async () => await GetKeys()">Get All keys</MudButton>
+    </MudItem>
+    <MudItem xs="6" sm="2">
+        <MudButton Color="Color.Warning" OnClick="async () => await ClearStore()">Clear store</MudButton>
+    </MudItem>
+    @foreach (var key in Keys)
+    {
+        <MudItem xs="6" sm="2">
+          Key :  @key
+        </MudItem>
+    }
     <MudItem xs="12">
 
         <MudDataGrid T="MyEntity" Items="@MyEntities" EditMode="DataGridEditMode.Cell"
