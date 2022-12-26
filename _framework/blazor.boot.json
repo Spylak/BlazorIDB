@@ -7,8 +7,8 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "BlazorIDB.dll": "sha256-SaoU3\/iIb4HhVxCMuqHknV5YqzBp561ywp29CG0Gd5I=",
-      "BlazorTest.dll": "sha256-aKEmnB9EtG3II\/VhMvf97JCApxUf6uSpEW3C3vWMPvs=",
+      "BlazorIDB.dll": "sha256-ZhiegACJgOD81ydD5DJXM0nA31pcGpEGf4EBR1axFxM=",
+      "BlazorTest.dll": "sha256-basPJvjEmhL7N5UtzuMjFj2lX4FLZTvodscrCHr6Fhg=",
       "Microsoft.AspNetCore.Components.dll": "sha256-S067qq5aiScemWrGybs8mFK9HH5eM+eyrSshQjNoKQc=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-3SUOUqqapHhh85LmDZm84Qreqcj3Gy5qHzOLd\/O2RZ8=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-gs1ggD5GB\/1DLpceXdv7F9EAUSKPb4\/hCdV76Xk9mx0=",
@@ -26,7 +26,7 @@
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-gAM0U1w98ffRNyjMybCtgJeQFGgmxqc7CH1\/UxP2p2o=",
       "MudBlazor.dll": "sha256-xwzXjdIkaGe9TSTPdNFub733Sqyqf5rkPh1\/OuuLHGo=",
       "System.Collections.Concurrent.dll": "sha256-z2NFtLFrKCl9zX5yUUOvy+bvcexmP5D7WKbce7CkMqQ=",
-      "System.Collections.dll": "sha256-X6eMqqr600VRo1rILveP\/0zzDdZaXdRjmWkPhwwQ+hM=",
+      "System.Collections.dll": "sha256-e3YlR+NW3gqExCyeGJW5dUVLiIlfm5RvbRpjgSv+Rxs=",
       "System.ComponentModel.Annotations.dll": "sha256-dkyUUEktqS1JzOKyp7GujlY8NBz+Nsf64ugZVw8TefI=",
       "System.ComponentModel.dll": "sha256-BLz3Wm0oM0Gjn8FyeXZ5AagxMamz+5pWuLYIoqAi6cI=",
       "System.ComponentModel.Primitives.dll": "sha256-rHcFKlxJT21DLHmEbrQqOXsADUKlgFfcMGCWDBQvSrY=",
@@ -41,7 +41,7 @@
       "System.ObjectModel.dll": "sha256-DNLcm7sS7GjyhPaT5PbWZ9wa\/Gx8Ga24EE\/ZNYA8CY8=",
       "System.Private.CoreLib.dll": "sha256-dbfInxLxAyHjRXpoY\/kZCH6mz8tGV3tZ0l3A\/1lgNrw=",
       "System.Private.Uri.dll": "sha256-76LA7VcP49XFQdpP8NaYj\/t+RBRqc9YcMBIn9S\/brVw=",
-      "System.Runtime.dll": "sha256-biK77s6SHNv1jT2sB8pAFzcbIS8d+2SKwLHgGXUm50k=",
+      "System.Runtime.dll": "sha256-ZcS3Te9ADmXswHdrRW+KaVsm1J1v3K5\/r7gmQxbp8tc=",
       "System.Runtime.InteropServices.JavaScript.dll": "sha256-zvdZz94cE0MJOW4knnqNRgFJyUDSVj\/Tiger+czwWKw=",
       "System.Runtime.Numerics.dll": "sha256-e2KEP+Do02GkYpn4Av8OzclopKSO3FuQVYZqwMtD2Qs=",
       "System.Text.Encodings.Web.dll": "sha256-cm0YJx3r\/ZuuTCQdWGQeo92Gx5uKFdH+7\/xBIIueiOQ=",
