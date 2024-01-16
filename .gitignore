@@ -20,3 +20,5 @@
 /BlazorIDB/obj
 /.vs/BlazorIDB/FileContentIndex
 /.vs/BlazorIDB/config
+/BlazorIDB/bin/*
+.idea/*

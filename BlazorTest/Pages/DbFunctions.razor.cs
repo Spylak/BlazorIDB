@@ -13,22 +13,23 @@ namespace BlazorTest.Pages
     {
         private string EntityId { get; set; }
         private Random Random = new Random();
-        [Inject] private IndexedDb _indexedDb { get; set; }
-        [Inject] private IGlobalService globalService { get; set; }
+        [Inject] private IndexedDb IndexedDb { get; set; }
+        [Inject] private IGlobalService GlobalService { get; set; }
         private List<MyEntity> MyEntities = new List<MyEntity>();
         private HashSet<MyEntity> SelectedItems = new HashSet<MyEntity>();
         private MyEntity GetOneEntity { get; set; }
         private List<string> Keys { get; set; } = new List<string>();
+
         protected override async Task OnInitializedAsync()
         {
-            if (_indexedDb == null)
+            if (IndexedDb == null)
                 return;
             await LoadData();
         }
 
         private async Task LoadData()
         {
-            var result = await _indexedDb?.Entities?.GetAll();
+            var result = await IndexedDb?.Entities?.GetAllAsync();
             MyEntities = result?.Data?.ToList() ?? new List<MyEntity>();
         }
 
@@ -39,17 +40,19 @@ namespace BlazorTest.Pages
                 Id = Guid.NewGuid().ToString(),
                 StringProp = $"New Prop {Random.Next(0, 1000)}",
                 IntProp = Random.Next(0, 1000),
-                IntList = new List<int>(){
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000)
-            },
+                IntList = new List<int>()
+                {
+                    Random.Next(0, 1000),
+                    Random.Next(0, 1000),
+                    Random.Next(0, 1000),
+                    Random.Next(0, 1000),
+                    Random.Next(0, 1000)
+                },
                 InnerProperty = new MyEntity.InnerClass()
                 {
                     InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
-                    StringList = new List<string>(){
+                    StringList = new List<string>()
+                    {
                         $"Random string nubmer {Random.Next(0, 1000)}",
                         $"Random string nubmer {Random.Next(0, 1000)}",
                         $"Random string nubmer {Random.Next(0, 1000)}",
@@ -59,106 +62,118 @@ namespace BlazorTest.Pages
                 }
             };
 
-            await _indexedDb.Entities.Add(myEnt);
+            var result = await IndexedDb.Entities.AddAsync(myEnt);
             await LoadData();
+            await GlobalService.ConsoleLog(result);
             StateHasChanged();
         }
 
         private async Task GetById(string id)
         {
-            var getById = (await _indexedDb.Entities.GetById(id)).Data;
+            var getById = (await IndexedDb.Entities.GetByIdAsync(id)).Data;
             if (getById is null)
                 return;
             MyEntities = new List<MyEntity>();
             MyEntities.Add(getById);
             StateHasChanged();
         }
+
         private async Task AddRange()
         {
-            await _indexedDb.Entities.AddRange(new List<MyEntity>()
-        {
-            new MyEntity()
-        {
-            Id = Guid.NewGuid().ToString(),
-            StringProp = $"New Prop {Random.Next(0, 1000)}",
-            IntProp = Random.Next(0,1000),
-            IntList =  new List<int>(){
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000)
-            },
-            InnerProperty = new MyEntity.InnerClass(){
-                    InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
-                    StringList = new List<string>(){
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}"
+            var result = await IndexedDb.Entities.AddRangeAsync(new List<MyEntity>()
+            {
+                new MyEntity()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    StringProp = $"New Prop {Random.Next(0, 1000)}",
+                    IntProp = Random.Next(0, 1000),
+                    IntList = new List<int>()
+                    {
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000)
+                    },
+                    InnerProperty = new MyEntity.InnerClass()
+                    {
+                        InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
+                        StringList = new List<string>()
+                        {
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}"
+                        }
                     }
-            }
-        },
-            new MyEntity()
-        {
-            Id = Guid.NewGuid().ToString(),
-            StringProp = $"New Prop {Random.Next(0, 1000)}",
-            IntProp = Random.Next(0,1000),
-            IntList =  new List<int>(){
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000)
-            },
-            InnerProperty = new MyEntity.InnerClass(){
-                    InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
-                    StringList = new List<string>(){
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}"
+                },
+                new MyEntity()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    StringProp = $"New Prop {Random.Next(0, 1000)}",
+                    IntProp = Random.Next(0, 1000),
+                    IntList = new List<int>()
+                    {
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000)
+                    },
+                    InnerProperty = new MyEntity.InnerClass()
+                    {
+                        InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
+                        StringList = new List<string>()
+                        {
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}"
+                        }
                     }
-            }
-        },
-            new MyEntity()
-{
-            Id = Guid.NewGuid().ToString(),
-            StringProp = $"New Prop {Random.Next(0, 1000)}",
-            IntProp = Random.Next(0,1000),
-            IntList =  new List<int>(){
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000),
-                Random.Next(0,1000)
-            },
-            InnerProperty = new MyEntity.InnerClass(){
-                    InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
-                    StringList = new List<string>(){
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}",
-                        $"Random string nubmer {Random.Next(0, 1000)}"
+                },
+                new MyEntity()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    StringProp = $"New Prop {Random.Next(0, 1000)}",
+                    IntProp = Random.Next(0, 1000),
+                    IntList = new List<int>()
+                    {
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000),
+                        Random.Next(0, 1000)
+                    },
+                    InnerProperty = new MyEntity.InnerClass()
+                    {
+                        InnerString = $"Random string nubmer {Random.Next(0, 1000)}",
+                        StringList = new List<string>()
+                        {
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}",
+                            $"Random string nubmer {Random.Next(0, 1000)}"
+                        }
                     }
-            }
-        },
-        });
+                },
+            });
             await LoadData();
 
             StateHasChanged();
         }
+
         private async Task Update(MyEntity entity)
         {
-            await _indexedDb.Entities.Update(entity);
+            await IndexedDb.Entities.UpdateAsync(entity);
         }
 
         private async Task<ResponseIDB> Remove(MyEntity entity)
         {
-            return await _indexedDb.Entities.Remove(entity);
+            return await IndexedDb.Entities.RemoveAsync(entity);
         }
 
         private async Task RemoveId(string id)
@@ -172,40 +187,43 @@ namespace BlazorTest.Pages
                 StateHasChanged();
             }
         }
+
         private async Task RemoveRange(ICollection<MyEntity> myEntities)
         {
-            var result = await _indexedDb.Entities.RemoveRange(myEntities);
+            var result = await IndexedDb.Entities.RemoveRangeAsync(myEntities);
             await LoadData();
             StateHasChanged();
         }
 
         private async Task ClearStore()
         {
-            var result = await _indexedDb.ClearStore();
+            var result = await IndexedDb.ClearStoreAsync();
             await LoadData();
             StateHasChanged();
         }
-        
+
         private async Task GetKeys()
         {
-            var result = await _indexedDb.GetKeys();
+            var result = await IndexedDb.GetKeysAsync();
             if (result.IsSuccess)
             {
                 Keys = result.Data ?? new List<string>();
             }
+
             await LoadData();
             StateHasChanged();
         }
-        
+
         private async Task UpdateRange(List<MyEntity> myEntities)
         {
-            var result = await _indexedDb.Entities.UpdateRange(myEntities);
+            var result = await IndexedDb.Entities.UpdateRangeAsync(myEntities);
             await LoadData();
             StateHasChanged();
         }
+
         private async Task Drop(string tableName)
         {
-            var table = _indexedDb?.GetType().GetProperty(tableName);
+            var table = IndexedDb?.GetType().GetProperty(tableName);
             var method = table?.PropertyType.GetMethod("DropTable");
             var task = (Task<bool>?)method?.Invoke(null, null);
             if (task is null)
@@ -215,6 +233,7 @@ namespace BlazorTest.Pages
             await LoadData();
             StateHasChanged();
         }
+
         void StartedEditingItem(MyEntity item)
         {
         }

@@ -14,7 +14,7 @@ namespace BlazorIDB
             _tableName = tableName;
         }
 
-        public async Task<ResponseIDB> Add(T? entity)
+        public async Task<ResponseIDB> AddAsync(T? entity)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BlazorIDB
 
                 await indexedDb
                     .InvokeVoidAsync("postItem", _tableName, entities);
-
+                throw new Exception("bye");
                 return new ResponseIDB(true);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace BlazorIDB
                 return new ResponseIDB(false, ex.Message, ErrorCode.ExceptionError);
             }
         }
-        public async Task<ResponseIDB> AddRange(IEnumerable<T>? entitiesIn)
+        public async Task<ResponseIDB> AddRangeAsync(IEnumerable<T>? entitiesIn)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace BlazorIDB
                 return new ResponseIDB(false, ex.Message, ErrorCode.ExceptionError);
             }
         }
-        public async Task<ResponseIDB> AddRange(ICollection<T>? entitiesIn)
+        public async Task<ResponseIDB> AddRangeAsync(ICollection<T>? entitiesIn)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> Update(T? entity)
+        public async Task<ResponseIDB> UpdateAsync(T? entity)
         {
             try
             {
@@ -168,7 +168,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> UpdateRange(ICollection<T>? entitiesIn)
+        public async Task<ResponseIDB> UpdateRangeAsync(ICollection<T>? entitiesIn)
         {
             try
             {
@@ -213,7 +213,7 @@ namespace BlazorIDB
                 return new ResponseIDB(false, ex.Message, ErrorCode.ExceptionError);
             }
         }
-        public async Task<ResponseIDB> UpdateRange(IEnumerable<T>? entitiesIn)
+        public async Task<ResponseIDB> UpdateRangeAsync(IEnumerable<T>? entitiesIn)
         {
             try
             {
@@ -259,7 +259,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB<IEnumerable<T>>> GetAll()
+        public async Task<ResponseIDB<IEnumerable<T>>> GetAllAsync()
         {
             try
             {
@@ -280,7 +280,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB<T>> GetById(string? id)
+        public async Task<ResponseIDB<T>> GetByIdAsync(string? id)
         {
             try
             {
@@ -311,7 +311,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> Remove(T? entity)
+        public async Task<ResponseIDB> RemoveAsync(T? entity)
         {
             try
             {
@@ -350,7 +350,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> RemoveRange(ICollection<T>? entitiesIn)
+        public async Task<ResponseIDB> RemoveRangeAsync(ICollection<T>? entitiesIn)
         {
             try
             {
@@ -396,7 +396,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> RemoveRange(IEnumerable<T>? entitiesIn)
+        public async Task<ResponseIDB> RemoveRangeAsync(IEnumerable<T>? entitiesIn)
         {
             try
             {
@@ -442,7 +442,7 @@ namespace BlazorIDB
             }
         }
 
-        public async Task<ResponseIDB> DropTable()
+        public async Task<ResponseIDB> DropTableAsync()
         {
             try
             {
@@ -459,7 +459,7 @@ namespace BlazorIDB
                 return new ResponseIDB(false, ex.Message, ErrorCode.ExceptionError);
             }
         }
-        private async Task<ResponseIDB<List<string>>> GetKeys()
+        private async Task<ResponseIDB<List<string>>> GetKeysAsync()
         {
             try
             {

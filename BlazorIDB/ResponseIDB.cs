@@ -2,10 +2,11 @@
 {
     public class ResponseIDB
     {
-        public ResponseIDB(bool isSuccess, string? message = null,ErrorCode? errorCode = null)
+        public ResponseIDB(bool isSuccess, string? message = null, ErrorCode? errorCode = null)
         {
             IsSuccess = isSuccess;
             Message = message;
+            ErrorCode = errorCode;
         }
         public bool IsSuccess { get; init; }
         public string? Message { get; init; }

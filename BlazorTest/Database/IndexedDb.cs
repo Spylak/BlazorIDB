@@ -1,7 +1,6 @@
 ﻿using BlazorIDB;
 using BlazorTest.Entities;
 using Microsoft.JSInterop;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BlazorTest.Database
 {

@@ -41,6 +41,10 @@ public class IndexedDb
 ### Add Database Class to Services in Program.cs
 
 ```c#
+builder.Services.AddBlazorIDB<IndexedDb>();
+
+or
+    
 builder.Services.AddSingleton<IndexedDb>();
 ```
 
@@ -54,19 +58,19 @@ builder.Services.AddSingleton<IndexedDb>();
 
 ```c#
 //Get all
-var allEntities = await _indexedDb.Entity.GetAll();
+var allEntities = await _indexedDb.Entity.GetAllAsync();
 
 //GetById, the id used is a string
-var getEntity = await _indexedDb.Entity.GetById(id);
+var getEntity = await _indexedDb.Entity.GetByIdAsync(id);
 
 //When adding either single entity or many they generate a new Guid that is then saved as string.
-//Add
+//AddAsync
 var entity=new MyEntity()
 {
     Props...
 }
-await _indexedDb.Entity.Add(entity);
-//AddRange
+await _indexedDb.Entity.AddAsync(entity);
+//AddRangeAsync
 var entityList = new List<MyEntity>()
 {
     new MyEntity()
@@ -78,22 +82,22 @@ var entityList = new List<MyEntity>()
             Props...
         }
 }
-await _indexedDb.Entity.AddRange(entityList);
+await _indexedDb.Entity.AddRangeAsync(entityList);
 
-//Update
+//UpdateAsync
 entity.Prop = SomethingNew;
-await _indexedDb.Entity.Update(entity);
+await _indexedDb.Entity.UpdateAsync(entity);
 
-//UpdateRange
+//UpdateRangeAsync
 entityList.FirstOrDefault().Prop = SomethingNew;
-await _indexedDb.Entity.UpdateRange(entityList);
+await _indexedDb.Entity.UpdateRangeAsync(entityList);
 
-//Remove
-await _indexedDb.Entity.Remove(entity);
+//RemoveAsync
+await _indexedDb.Entity.RemoveAsync(entity);
 
-//RemoveRange
-await _indexedDb.Entity.RemoveRange(entityList);
+//RemoveRangeAsync
+await _indexedDb.Entity.RemoveRangeAsync(entityList);
 
-//DropTable, this deletes the key provided to the entity and its values
-await _indexedDb.Entity.DropTable();
+//DropTableAsync, this deletes the key provided to the entity and its values
+await _indexedDb.Entity.DropTableAsync();
 ```
