@@ -12,7 +12,7 @@ public class BlazorIndexedDb
         _jsRuntime = jsRuntime;
     }
     
-    public async Task<ResponseIDB> ClearStore()
+    public async Task<ResponseIDB> ClearStoreAsync()
     {
         try
         {
@@ -30,7 +30,7 @@ public class BlazorIndexedDb
         }
     }
         
-    public async Task<ResponseIDB<List<string>>> GetKeys()
+    public async Task<ResponseIDB<List<string>>> GetKeysAsync()
     {
         try
         {
