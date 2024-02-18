@@ -7,7 +7,7 @@ namespace BlazorIDB
     {
         private readonly IJSRuntime _jsRuntime;
         private readonly string _tableName;
-        const string ImportPath = "./_content/BlazorIDB/indexedDb.js";
+        private IJSObjectReference? IndexedDb { get; set; }
         public IndexedDbFunctions(IJSRuntime jsRuntime, string tableName)
         {
             _jsRuntime = jsRuntime;
@@ -24,10 +24,10 @@ namespace BlazorIDB
                 if (entity.GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.",ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName) ?? new List<T>();
 
                 var id = entity.GetType().GetProperty("Id")?.GetValue(entity);
@@ -37,9 +37,9 @@ namespace BlazorIDB
 
                 entities.Add(entity);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("postItem", _tableName, entities);
-                throw new Exception("bye");
+                
                 return new ResponseIDB(true);
             }
             catch (Exception ex)
@@ -54,16 +54,16 @@ namespace BlazorIDB
                 if (entitiesIn is null)
                     return new ResponseIDB(false, "Entities are null", ErrorCode.NullInput);
 
-                if (!entitiesIn.Any())
+                if (entitiesIn.Any())
                     return new ResponseIDB(false, "Nothing to add", ErrorCode.NullInput);
 
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime.InvokeAsync<IJSObjectReference>(
-                    "import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName) ?? new List<T>();
 
                 foreach (var item in entitiesIn)
@@ -76,7 +76,7 @@ namespace BlazorIDB
 
                 entities.AddRange(entitiesIn);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("postItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -99,10 +99,10 @@ namespace BlazorIDB
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName) ?? new List<T>();
 
                 foreach (var item in entitiesIn)
@@ -115,7 +115,7 @@ namespace BlazorIDB
 
                 entities.AddRange(entitiesIn);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("postItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -136,10 +136,10 @@ namespace BlazorIDB
                 if (entity.GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -157,7 +157,7 @@ namespace BlazorIDB
 
                 entities.Add(entity);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -181,10 +181,10 @@ namespace BlazorIDB
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -203,7 +203,7 @@ namespace BlazorIDB
                     }
                 }
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -226,10 +226,10 @@ namespace BlazorIDB
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -248,7 +248,7 @@ namespace BlazorIDB
                     }
                 }
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -263,10 +263,10 @@ namespace BlazorIDB
         {
             try
             {
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -287,10 +287,10 @@ namespace BlazorIDB
                 if (id is null)
                     return new ResponseIDB<T>(null, false, "Id is null", ErrorCode.NullInput);
 
-                var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -321,10 +321,10 @@ namespace BlazorIDB
                 if (entity.GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -339,7 +339,7 @@ namespace BlazorIDB
 
                 entities.Remove(item);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
                 
                 return new ResponseIDB(true);
@@ -363,10 +363,10 @@ namespace BlazorIDB
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -385,7 +385,7 @@ namespace BlazorIDB
                     }
                 }
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -409,10 +409,10 @@ namespace BlazorIDB
                 if (entitiesIn.First().GetType().GetProperty("Id") is null)
                     return new ResponseIDB(false, "Entity type has not Id property.", ErrorCode.MissingIdProperty);
 
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var entities = await indexedDb
+                var entities = await IndexedDb
                     .InvokeAsync<List<T>?>("getItem", _tableName);
 
                 if (entities is null)
@@ -431,7 +431,7 @@ namespace BlazorIDB
                     }
                 }
 
-                await indexedDb
+                await IndexedDb
                     .InvokeVoidAsync("putItem", _tableName, entities);
 
                 return new ResponseIDB(true);
@@ -446,10 +446,10 @@ namespace BlazorIDB
         {
             try
             {
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                await indexedDb
+                await IndexedDb
                     .InvokeAsync<bool>("removeItem", _tableName);
 
                 return new ResponseIDB(true);
@@ -463,10 +463,10 @@ namespace BlazorIDB
         {
             try
             {
-                var indexedDb = await _jsRuntime
-                    .InvokeAsync<IJSObjectReference>("import", ImportPath);
+                IndexedDb ??= await _jsRuntime
+                    .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-                var keys = await indexedDb
+                var keys = await IndexedDb
                     .InvokeAsync<List<string>>("getKeys");
 
                 return new ResponseIDB<List<string>>(keys,true);

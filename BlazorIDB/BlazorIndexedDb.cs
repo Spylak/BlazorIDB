@@ -5,8 +5,7 @@ namespace BlazorIDB;
 public class BlazorIndexedDb
 {
     private readonly IJSRuntime _jsRuntime;
-    const string ImportPath = "./_content/BlazorIDB/indexedDb.js";
-
+    private IJSObjectReference? IndexedDb { get; set; }
     public BlazorIndexedDb(IJSRuntime jsRuntime)
     {
         _jsRuntime = jsRuntime;
@@ -16,10 +15,10 @@ public class BlazorIndexedDb
     {
         try
         {
-            var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
-
-            await indexedDb
+            IndexedDb ??= await _jsRuntime
+                .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
+            
+            await IndexedDb
                 .InvokeAsync<bool>("clearStore");
 
             return new ResponseIDB(true);
@@ -34,10 +33,10 @@ public class BlazorIndexedDb
     {
         try
         {
-            var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+            IndexedDb ??= await _jsRuntime
+                .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-            var keys = await indexedDb
+            var keys = await IndexedDb
                 .InvokeAsync<List<string>>("getKeys");
 
             return new ResponseIDB<List<string>>(keys,true);
@@ -53,10 +52,10 @@ public class BlazorIndexedDb
         {
             if (tableName is null)
                 return new ResponseIDB(false, "Table name doesn't exist.", ErrorCode.TableNameDoesNotExist);
-            var indexedDb = await _jsRuntime
-                .InvokeAsync<IJSObjectReference>("import", ImportPath);
+            IndexedDb ??= await _jsRuntime
+                .InvokeAsync<IJSObjectReference>("import", Constants.ImportPath);
 
-            await indexedDb
+            await IndexedDb
                 .InvokeAsync<bool>("removeItem", tableName);
 
             return new ResponseIDB(true);

@@ -64,7 +64,6 @@ namespace BlazorTest.Pages
 
             var result = await IndexedDb.Entities.AddAsync(myEnt);
             await LoadData();
-            await GlobalService.ConsoleLog(result);
             StateHasChanged();
         }
 
