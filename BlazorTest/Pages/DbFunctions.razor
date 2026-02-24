@@ -41,7 +41,7 @@
                      Hover="true"
                      Striped="true"
                      MultiSelection="true"
-                     SelectedItems="@SelectedItems"
+                     SelectedItemsChanged="@((items) => SelectedItems = items)"
                      CommittedItemChanges="@CommittedItemChanges"
                      EditTrigger="DataGridEditTrigger.OnRowClick">
             <ToolBarContent>
@@ -52,31 +52,27 @@
                 </MudButton>
             </ToolBarContent>
             <Columns>
-                <Column T="MyEntity" IsEditable="false">
-                    <CellTemplate>
-                            <MudCheckBox T="bool" Checked="@context.IsSelected" CheckedChanged="@context.Actions.SetSelectedItem" />
-                        </CellTemplate>
-                </Column>
-                <Column T="MyEntity" Sortable="false" IsEditable="false">
+                <SelectColumn/>
+                <TemplateColumn T="MyEntity" Sortable="false" Editable="false">
                     <CellTemplate>
                         <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                        Color="Color.Error"
                                        OnClick="async () => await RemoveId(context.Item.Id)"/>
                     </CellTemplate>
-                </Column>
-                <Column T="MyEntity" Field="Id" IsEditable="false"/>
-                <Column T="MyEntity" Field="StringProp"/>
-                <Column T="MyEntity" Field="IntProp"/>
-                <Column T="MyEntity" Field="IntList" IsEditable="false">
+                </TemplateColumn>
+                <PropertyColumn Property="entity => entity.Id" Editable="false"/>
+                <PropertyColumn Property="entity => entity.StringProp"/>
+                <PropertyColumn Property="entity => entity.IntProp"/>
+                <TemplateColumn Editable="false">
                     <CellTemplate>
                         @(JsonSerializer.Serialize(context.Item.IntList))
                     </CellTemplate>
-                </Column>
-                <Column T="MyEntity" Field="InnerProperty" IsEditable="false">
+                </TemplateColumn>
+                <TemplateColumn T="MyEntity" Editable="false">
                     <CellTemplate>
                         @(JsonSerializer.Serialize(context.Item.InnerProperty))
                     </CellTemplate>
-                </Column>
+                </TemplateColumn>
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="MyEntity"/>

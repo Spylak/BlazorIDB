@@ -1,11 +1,9 @@
 ﻿using BlazorIDB;
 using BlazorTest.Database;
 using BlazorTest.Entities;
-using BlazorTest.Services;
 using BlazorTest.Services.IServices;
 using Microsoft.AspNetCore.Components;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using MudBlazor;
 
 namespace BlazorTest.Pages
 {
@@ -241,9 +239,10 @@ namespace BlazorTest.Pages
         {
         }
 
-        async Task CommittedItemChanges(MyEntity item)
+        private async Task<DataGridEditFormAction> CommittedItemChanges(MyEntity item)
         {
             await Update(item);
+            return DataGridEditFormAction.Close;
         }
     }
 }
